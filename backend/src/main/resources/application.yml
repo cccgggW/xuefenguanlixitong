@@ -1,0 +1,48 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: xuefen-backend
+  # MySQL 数据库配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/xuefen?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ""
+  sql:
+    init:
+      mode: embedded
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+      encoding: UTF-8
+      continue-on-error: false
+
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+
+logging:
+  level:
+    com.xuefen: debug
+    org.springframework.boot: info
+ai:
+  llm:
+    # 是否启用大模型智能体；关闭后自动回退到关键词规则引擎
+    enabled: ${AI_LLM_ENABLED:true}
+    #  AI（BigModel）OpenAI 兼容接口
+    base-url: ${AI_LLM_BASE_URL:}
+    #  API Key
+    api-key: ${AI_LLM_API_KEY:}
+    # 模型：
+    model: ${AI_LLM_MODEL:}
+    # 请求超时（秒）
+    timeout-seconds: ${AI_LLM_TIMEOUT:60}
+
